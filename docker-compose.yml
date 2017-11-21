@@ -34,6 +34,11 @@ services:
               - INSTALL_PHPREDIS=${PHP_FPM_INSTALL_PHPREDIS}
               - INSTALL_OPCACHE=${PHP_FPM_INSTALL_OPCACHE}
               - INSTALL_GHOSTSCRIPT=${PHP_FPM_INSTALL_GHOSTSCRIPT}
+              - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
+              - INSTALL_PGSQL=${PHP_FPM_INSTALL_PGSQL}
+              - INSTALL_PG_CLIENT=${PHP_FPM_INSTALL_PG_CLIENT}
+              - INSTALL_IMAGEMAGICK=${PHP_FPM_INSTALL_IMAGEMAGICK}
+            dockerfile: "Dockerfile-${PHP_VERSION}"
         volumes_from:
           - applications
         volumes:
@@ -85,9 +90,8 @@ services:
         - "6379:6379"
       networks:
         - backend
-        
-    ### Adminer Container
 
+    ### Adminer Container
     adminer:
       build:
         context: ./adminer
@@ -98,7 +102,7 @@ services:
       networks:
         - frontend
         - backend
-        
+
     ### Selenium Container
     selenium:
       build: ./selenium
@@ -108,7 +112,7 @@ services:
         - /dev/shm:/dev/shm
       networks:
         - frontend
-        
+
     ### Workspace Utilities Container
     workspace:
       build:
@@ -117,6 +121,13 @@ services:
           - COMPOSER_GLOBAL_INSTALL=${WORKSPACE_COMPOSER_GLOBAL_INSTALL}
           - INSTALL_NODE=${WORKSPACE_INSTALL_NODE}
           - NODE_VERSION=${WORKSPACE_NODE_VERSION}
+          - INSTALL_YARN=${WORKSPACE_INSTALL_YARN}
+          - INSTALL_PHPREDIS=${WORKSPACE_INSTALL_PHPREDIS}
+          - INSTALL_IMAGEMAGICK=${WORKSPACE_INSTALL_IMAGEMAGICK}
+          - PUID=${WORKSPACE_PUID}
+          - PGID=${WORKSPACE_PGID}
+          - TZ=${WORKSPACE_TIMEZONE}
+        dockerfile: "Dockerfile-${PHP_VERSION}"
       volumes_from:
         - applications
       extra_hosts:
@@ -134,7 +145,7 @@ networks:
         driver: "bridge"
     backend:
       driver: "bridge"
-      
+
 ### Volumes Setup #############################################
 volumes:
   mysql:

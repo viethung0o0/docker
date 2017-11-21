@@ -66,6 +66,62 @@ RUN if [ ${INSTALL_GHOSTSCRIPT} = true ]; then \
     ghostscript \
 ;fi
 
+#####################################
+# pgsql
+#####################################
+
+ARG INSTALL_PGSQL=false
+RUN if [ ${INSTALL_PGSQL} = true ]; then \
+    # Install the pgsql extension
+    apt-get update -yqq && \
+    docker-php-ext-install pgsql \
+;fi
+
+#####################################
+# pgsql client
+#####################################
+
+ARG INSTALL_PG_CLIENT=false
+RUN if [ ${INSTALL_PG_CLIENT} = true ]; then \
+    # Install the pgsql client
+    apt-get update -yqq && \
+    apt-get install -y postgresql-client \
+;fi
+
+#####################################
+# ZipArchive:
+#####################################
+
+ARG INSTALL_ZIP_ARCHIVE=false
+RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
+    # Install the zip extension
+    docker-php-ext-install zip \
+;fi
+
+#####################################
+# bcmath:
+#####################################
+
+ARG INSTALL_BCMATH=false
+RUN if [ ${INSTALL_BCMATH} = true ]; then \
+    # Install the bcmath extension
+    docker-php-ext-install bcmath \
+;fi
+
+
+#####################################
+# ImageMagick:
+#####################################
+USER root
+ARG INSTALL_IMAGEMAGICK=false
+ENV INSTALL_IMAGEMAGICK ${INSTALL_IMAGEMAGICK}
+RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
+    apt-get update -y && \
+    apt-get install -y libmagickwand-dev imagemagick && \
+    pecl install imagick && \
+    docker-php-ext-enable imagick \
+;fi
+
 ADD ./laravel.ini /usr/local/etc/php/conf.d
 ADD ./laravel.pool.conf /usr/local/etc/php-fpm.d/
 
