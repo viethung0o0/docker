@@ -17,8 +17,8 @@ https://twilio.dev {
     errors /var/log/caddy/error.log
     # Uncomment to enable TLS (HTTPS)
     # Change the first list to listen on port 443 when enabling TLS
-    #tls self_signed
-    tls viethung090@gmail.com
+    tls self_signed
+    #tls viethung090@gmail.com
 
     # To use Lets encrpt tls with a DNS provider uncomment these
     # lines and change the provider as required
@@ -27,8 +27,8 @@ https://twilio.dev {
     #}
 }
 
-laradock1.demo:80 {
-    root /var/www/public
+#laradock1.demo:80 {
+#    root /var/www/public
     # Create a Webhook in git.
     #git {
 	#repo https://github.com/xxx/xxx
@@ -38,10 +38,10 @@ laradock1.demo:80 {
     #    hook_type   generic
     #}
 
-}
+#}
 
-laradock2.demo:80 {
+#laradock2.demo:80 {
     # Create a Proxy and cors.
     #proxy domain.com
 	#cors
-}
+#}
