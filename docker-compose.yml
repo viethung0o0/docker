@@ -9,6 +9,7 @@ services:
 
     ### Nginx setup
     nginx:
+        container_name: ${PROJECT_NAME}_nginx
         build:
             context: ./nginx
             args:
@@ -28,6 +29,7 @@ services:
               
     ### PHP FPM
     php-fpm:
+        container_name: ${PROJECT_NAME}_php-fpm
         build:
             context: ./php-fpm
             args:
@@ -52,6 +54,7 @@ services:
           
     ### MySQL Container
     mysql:
+      container_name: ${PROJECT_NAME}_mysql
       build:
         context: ./mysql
       environment:
@@ -69,6 +72,7 @@ services:
         
     ### Postgres
     postgres:
+      container_name: ${PROJECT_NAME}_postgres
       build: ./postgres
       volumes:
         - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql/data
@@ -83,6 +87,7 @@ services:
 
     ### Postgres
     redis:
+      container_name: ${PROJECT_NAME}_redis
       build: ./redis
       volumes:
         - ${DATA_SAVE_PATH}/redis:/data
@@ -92,6 +97,7 @@ services:
         - backend
 
     caddy:
+      container_name: ${PROJECT_NAME}_caddy
       build: ./caddy
       volumes_from:
         - applications
@@ -110,6 +116,7 @@ services:
 
     ### Adminer Container
     adminer:
+      container_name: ${PROJECT_NAME}_adminer
       build:
         context: ./adminer
       ports:
@@ -122,6 +129,7 @@ services:
 
     ### Selenium Container
     selenium:
+      container_name: ${PROJECT_NAME}_selenium
       build: ./selenium
       ports:
         - "${SELENIUM_PORT}:4444"
@@ -132,6 +140,7 @@ services:
 
     ### Workspace Utilities Container
     workspace:
+      container_name: ${PROJECT_NAME}_workspace
       build:
         context: ./workspace
         args:
@@ -157,6 +166,7 @@ services:
         - backend
 
     slate:
+      container_name: ${PROJECT_NAME}_slate
       build: ./slate
       ports:
         - 4567:4567
