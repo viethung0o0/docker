@@ -1,0 +1,16 @@
+{
+  "name": "socker-server",
+  "version": "1.0.0",
+  "description": "Docker container for running laravel-echo-server",
+  "dependencies": {
+    "laravel-echo-server": "^1.2.1",
+    "pm2": "^2.10.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "laravel-echo-server start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

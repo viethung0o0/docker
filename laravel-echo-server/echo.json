@@ -1,0 +1,5 @@
+{
+  "name": "echo",
+  "script": "/app/node_modules/.bin/laravel-echo-server",
+  "args": "start"
+}

@@ -196,6 +196,16 @@ RUN if [ ${INSTALL_YARN} = true ]; then \
     echo 'export PATH="$YARN_DIR/bin:$PATH"' >> ~/.bashrc \
 ;fi
 
+# PHP REDIS EXTENSION
+ARG INSTALL_PHPREDIS=false
+ENV INSTALL_PHPREDIS ${INSTALL_PHPREDIS}
+RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
+    # Install Php Redis extension
+    printf "\n" | pecl -q install -o -f redis && \
+    echo "extension=redis.so" >> /etc/php/7.1/mods-available/redis.ini && \
+    phpenmod redis \
+;fi
+
 USER hungpv
 
 #
