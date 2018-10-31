@@ -24,7 +24,8 @@ services:
           - "${NGINX_HOST_HTTPS_PORT}:443"
         depends_on:
           - php-fpm
-    #      - laravel-echo-server
+          - laravel-echo-server
+          - nodejs
         networks:
           - backend
               
@@ -190,6 +191,25 @@ services:
         networks:
           - backend
 
+    ### PHP Worker Container
+
+    php-worker:
+      build:
+        context: ./php-worker
+        dockerfile: "Dockerfile-${PHP_VERSION}"
+        args:
+        - INSTALL_PGSQL=${PHP_WORKER_INSTALL_PGSQL}
+      volumes_from:
+      - applications
+      volumes:
+      - ./php-worker/supervisord.d:/etc/supervisord.d
+      depends_on:
+      - workspace
+      extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+      networks:
+      - backend
+
     ### pgAdmin
     pgadmin:
       build: ./pgadmin
@@ -205,6 +225,27 @@ services:
       networks:
         - frontend
         - backend
+
+    ### NODEJS
+    nodejs:
+      build:
+        context: ./nodejs
+        args:
+        - NODE_VERSION=${WORKSPACE_NODE_VERSION}
+      volumes_from:
+        - applications
+      extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+      expose:
+       - "8081"
+      environment:
+       - TZ=${NODE_TZ}
+      depends_on:
+        - workspace
+      networks:
+        - frontend
+        - backend
+
 
 ### Networks setup
 networks:  
