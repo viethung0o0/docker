@@ -7,4 +7,4 @@ WORKDIR /var/www/neolab/chatbot-fb
 
 EXPOSE 8081
 
-CMD ["pm2-runtime", "server.js", "--watch"]
+CMD ["pm2-runtime", "server.js", "--watch", "--ignore-watch=\"store/** frontend/** public/**\""]
