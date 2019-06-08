@@ -1,4 +1,4 @@
-FROM adminer:4.3.0
+FROM adminer:latest
 
 # Add volume for sessions to allow session persistence
 VOLUME /sessions
